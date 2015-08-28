@@ -30,7 +30,7 @@ define dotfiles (
   }->
   file {$creates:
     ensure => directory,
-    user => $title,
+    owner => $title,
     group => $title,
     recurse => true
   }
