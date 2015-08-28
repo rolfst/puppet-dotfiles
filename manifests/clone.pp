@@ -11,6 +11,7 @@ define dotfiles::clone(
     command => "git clone ${giturl}/${gituser}/${project}.git --branch $branch",
     creates => "${creates}",
     user    => "${title}",
+    path    => '/usr/bin:/usr/sbin:/usr/local/bin',
     require => Package['git'],
   }
 }
