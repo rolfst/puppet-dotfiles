@@ -27,43 +27,13 @@ define dotfiles (
     branch  => $branch,
     homedir => $real_homedir,
     creates => $creates;
+  }->
+  file {$creates:
+    ensure => directory,
+    user => $title,
+    group => $title,
+    recurse => true
   }
 
-  exec {
-    "link ${title} dotfiles":
-      cwd      => "${real_homedir}",
-      user     => "${title}",
-      provider => shell,
-      command  => $clobber ? {
-        false => "for f in ${creates}/${dotfiles_dir}/.[^.]*; do
-                    [ ! -e \${f##*/} ] && 
-                    ln -s \$f ./ || true;
-                  done",
-        true  => "for f in ${creates}/${dotfiles_dir}/.[^.]*; do
-                    if [ \"`readlink \${f##*/}`\" != \"`echo \$f`\" ]; then
-                     mv \${f##*/} \${f##*/}${bak_ext};
-                     ln -fs \$f ./; 
-                    else
-                      true;
-                    fi;
-                  done",
-        },
-      path    => '/usr/bin:/usr/sbin:/usr/local/bin',
-      unless   => $clobber ? {
-        false => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ -e \${f##*/} ] || exit 1; done", ## Each dotfile must merely exist
-        true  => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ \"`readlink \${f##*/}`\" == \"\$f\" ] || exit 1; done", ## Each dotfile must point to the file in the git project
-      },
-      require  => Dotfiles::Clone["${title}"];
-  }
-
-  dotfiles::update { $title:
-    gituser     => $gituser,
-    homedir     => $real_homedir,
-    cwd         => $creates,
-    single_pull => $single_pull,
-    rebase      => $rebase,
-    frequency   => $frequency,
-    require     => Dotfiles::Clone["${title}"];
-  }
 
 }
