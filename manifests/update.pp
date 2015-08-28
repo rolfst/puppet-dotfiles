@@ -14,6 +14,7 @@ define dotfiles::update(
       onlyif  => "[ ! -f .git/FETCH_HEAD ] || [ \"$(( ( $(date +%s) - $(stat -c \"%Y\" .git/FETCH_HEAD) ) / 60 ))\" -ge \"${frequency}\" ]",
       user    => "${title}",
       require => Package['git'],
+      path    => '/usr/bin:/usr/sbin:/usr/local/bin',
     }
   }
 
