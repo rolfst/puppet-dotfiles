@@ -48,6 +48,7 @@ define dotfiles (
                     fi;
                   done",
         },
+      path    => '/usr/bin:/usr/sbin:/usr/local/bin',
       unless   => $clobber ? {
         false => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ -e \${f##*/} ] || exit 1; done", ## Each dotfile must merely exist
         true  => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ \"`readlink \${f##*/}`\" == \"\$f\" ] || exit 1; done", ## Each dotfile must point to the file in the git project
