@@ -33,12 +33,12 @@ define dotfiles (
     ensure => 'link',
     target => "${real_homedir}/.vim"
  }->
-  file{"/${creates}/_vimrc":
+  file{"${creates}/_vimrc":
     owner => "${title}",
     ensure => 'link',
     target => "${real_homedir}/.vimrc"
  }->
-  file{"/${creates}/_tmux.conf":
+  file{"${creates}/_tmux.conf":
     owner => "${title}",
     ensure => 'link',
     target => "${real_homedir}/.tmux.conf"
