@@ -28,19 +28,19 @@ define dotfiles (
     homedir => $real_homedir,
     creates => $creates;
   }->
-  file{"${creates}/_vim":
+  file{"${real_homedir}/_vim":
     owner => "${title}",
     ensure => 'link',
-    target => "${real_homedir}/.vim"
+    target => "${creates}/.vim"
  }->
-  file{"${creates}/_vimrc":
+  file{"${real_homedir}/_vimrc":
     owner => "${title}",
     ensure => 'link',
-    target => "${real_homedir}/.vimrc"
+    target => "${creates}/.vimrc"
  }->
-  file{"${creates}/_tmux.conf":
+  file{"${real_homedir}/_tmux.conf":
     owner => "${title}",
     ensure => 'link',
-    target => "${real_homedir}/.tmux.conf"
+    target => "${creates}/.tmux.conf"
  }
 }
