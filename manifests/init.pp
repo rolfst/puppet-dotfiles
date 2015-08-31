@@ -27,13 +27,5 @@ define dotfiles (
     branch  => $branch,
     homedir => $real_homedir,
     creates => $creates;
-  }->
-  file {$creates:
-    ensure => directory,
-    owner => $title,
-    group => $title,
-    recurse => true
   }
-
-
 }
