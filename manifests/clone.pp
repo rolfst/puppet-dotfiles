@@ -13,5 +13,6 @@ define dotfiles::clone(
     user    => "${title}",
     path    => '/usr/bin:/usr/sbin:/usr/local/bin',
     require => Package['git'],
+    provider => 'shell'
   }
 }
