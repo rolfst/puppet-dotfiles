@@ -28,7 +28,7 @@ define dotfiles (
     homedir => $real_homedir,
     creates => $creates;
   }->
-  file{"/${creates}/_vim":
+  file{"${creates}/_vim":
     owner => "${title}",
     ensure => 'link',
     target => "${real_homedir}/.vim"
